@@ -47,13 +47,12 @@ I then used the output `object_points` and `image_points` to compute the camera 
 #### 1. Provide an example of a distortion-corrected image.
 
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
-![Calibration undistorted][imgcalib] 
+![png](./output_images/calib_pics.png)
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
 I used a combination of color and gradient thresholds to generate a binary image. Here's an example of my output for this step.  (note: this is not actually from one of the test images)
 
-![Straight Line1][imgroad] [Binary Form][imgbin]
 
 #### 3. Describe how you performed a perspective transform and provide an example of a transformed image.
 
