@@ -13,23 +13,12 @@ The goals / steps of this project are the following:
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
 [//]: # (Image References)
-[imgcalib]: ./output_images/calib_pics.png "Undistorted"
+[imgcalib]: ./output_images/calib_pics.jpg "Chessboard Undistorted"
 [imgroad]: ./test_images/straight_lines1.jpg "Road"
 [imgwarp]: ./output_images/straight1_warp.jpg "Warped"
 [imgbin]: ./output_images/straight1_bin.jpg "Binary"
 [video1]: ./project_video.mp4 "Video"
 
-## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
-
-### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
-
----
-
-### Writeup / README
-
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Advanced-Lane-Lines/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
-
-You're reading it!
 
 ### Camera Calibration
 
@@ -47,7 +36,10 @@ I then used the output `object_points` and `image_points` to compute the camera 
 #### 1. Provide an example of a distortion-corrected image.
 
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
-![png](./output_images/calib_pics.png)
+
+![imgcalib][imgcalib]
+
+
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
