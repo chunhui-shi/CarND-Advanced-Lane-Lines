@@ -13,9 +13,7 @@ The goals / steps of this project are the following:
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
 [//]: # (Image References)
-
-[imgcalib1]: ./camera_cal/calibration1.jpg "Calibration1"
-[image1]: ./output_images/undistorted_calib1.png "Undistorted"
+[imgcalib]: ./output_images/calib_pics.png "Undistorted"
 [imgroad]: ./test_images/straight_lines1.jpg "Road"
 [imgwarp]: ./output_images/straight1_warp.jpg "Warped"
 [imgbin]: ./output_images/straight1_bin.jpg "Binary"
@@ -49,7 +47,7 @@ I then used the output `object_points` and `image_points` to compute the camera 
 #### 1. Provide an example of a distortion-corrected image.
 
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
-![Calibration 1][image_calib1]   ![Undistorted][image1]
+![Calibration undistorted][imgcalib] 
 
 #### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
 
