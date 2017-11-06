@@ -64,10 +64,13 @@ The code for my perspective transform includes a function called `unwarp()`, whi
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
-![Straight Line1][imgroad] [Binary Form][imgbin]
+![Binary Form][imgbin]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
+With the binary results, now search the picture to find the two lanes and ccompute the continuous line from the binary images.
+1, separate the 
+1, start from the middle of picture, and search from the middle point to find first left spike
 Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
 
 ![alt text][image5]
