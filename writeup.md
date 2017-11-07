@@ -15,8 +15,9 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 [imgcalib]: ./output_images/calib_pics.jpg "Chessboard Undistorted"
 [imgroad]: ./test_images/straight_lines1.jpg "Road"
-[imgwarp]: ./output_images/straight1_warp.jpg "Warped"
+[imgwarp]: ./output_images/straight1-warp-compare.png "Warped"
 [imgbin]: ./output_images/straight1_bin.jpg "Binary"
+[imgformula]: ./formula-for-radius.png "Radius Formula"
 [video1]: ./project_video.mp4 "Video"
 
 
@@ -40,13 +41,7 @@ To demonstrate this step, I will describe how I apply the distortion correction 
 ![imgcalib][imgcalib]
 
 
-
-#### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
-
-I used a combination of color and gradient thresholds to generate a binary image. Here's an example of my output for this step.  (note: this is not actually from one of the test images)
-
-
-#### 3. Describe how you performed a perspective transform and provide an example of a transformed image.
+#### 2. Describe how you performed a perspective transform and provide an example of a transformed image.
 
 The code for my perspective transform includes a function called `unwarp()`, which is in the 4th code cell of the IPython notebook).  The `unwarp()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
 
@@ -64,26 +59,30 @@ The code for my perspective transform includes a function called `unwarp()`, whi
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
+![Warped results][imgwarp]
+
+
+#### 3. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image. Provide an example of a binary image result.
+
+I used a combination of color and gradient thresholds to generate a binary image. After multiple experiments I fixed to use several converted results combining together which seems the best solution to reduce the noise while preserve the shape of lanes as much as possible. 
+
 ![Binary Form][imgbin]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
-With the binary results, now search the picture to find the two lanes and ccompute the continuous line from the binary images.
-1, separate the 
-1, start from the middle of picture, and search from the middle point to find first left spike
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+With the binary results, now search the image to find the two lanes and compute the continuous lines using second order poly fit from the binary images.
 
-![alt text][image5]
+1, Separate the searching slots to 10 windows. Calculate the mean value of non-zero points to recenter next window.
+
+2, The points in the windows will be used to find the best second order polynomial to fit the two lane lines
+
+3, The first time I tried with directly using the fits computed from current images, if there is no fit, the lane won't be drawed green. The second try was to keep one fit computed, if there is no fit found in current image, we assumed the saved fit still apply (in method drawLane2). The third try(in method drawLane3) was to save up to 5-8 fits and use the average of these fits as best fit no matter whether current fit was found or not. By this way we could get a more stablized lane drawed on video images. 
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
 
-I did this in lines # through # in my code in `my_other_file.py`
+The real distance is a multiply to the pixel distance on image. Using the multiply provided at the class. When the second order polynomial is computed, for this one: y = Ax^2 + Bx + C, we compute the radius using this formula:
+![Radius Formula][imgformula]
 
-#### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
-
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
-
-![alt text][image6]
 
 ---
 
@@ -91,7 +90,7 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [![Sample Video](./project-video.png)](./project_video.mp4)
 
 ---
 
@@ -99,4 +98,6 @@ Here's a [link to my video result](./project_video.mp4)
 
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+How to preserve previous fits and use them to guide lane marking on current image seems could make significant difference. I believe there are some spaces for improvement in this area, e.g. using fits computed from images within a time frame like 0.5 second instead simply saving previous results up to a limit could be helpful. 
+
+There are many ways to convert an image to binary. I had to try and tune many different combinationa in color space, color channel, thresholds, and the scope to unwarp. These works are tedious and hard to tell which one better than the other, and even some did work well, we still could not get the confidence that how these parameters work for different video. In such problems, machine learning approach should be able to perform better and easier to implement.
